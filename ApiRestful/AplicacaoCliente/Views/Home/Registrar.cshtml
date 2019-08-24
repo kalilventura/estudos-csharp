@@ -1,0 +1,122 @@
+﻿@model ClienteModel
+<h2>Registrar Cliente</h2>
+
+@{ 
+    var id = string.Empty;
+    var nome = string.Empty;
+    var data_cadastro = string.Empty;
+    var cpf_cnpj = string.Empty;
+    var data_nascimento = string.Empty;
+    var tipo = string.Empty;
+    var telefone = string.Empty;
+    var email = string.Empty;
+    var cep = string.Empty;
+    var logradouro = string.Empty;
+    var numero = string.Empty;
+    var bairro = string.Empty;
+    var complemento = string.Empty;
+    var cidade = string.Empty;
+    var uf = string.Empty;
+
+    try
+    {
+        id = ViewBag.Registro.Id.ToString();
+        nome = ViewBag.Registro.Nome.ToString();
+        data_cadastro = ViewBag.Registro.Data_Cadastro.ToString();
+        cpf_cnpj = ViewBag.Registro.Cpf_Cnpj.ToString();
+        data_nascimento = ViewBag.Registro.Data_Nascimento.ToString();
+        tipo = ViewBag.Registro.Tipo.ToString();
+        telefone = ViewBag.Registro.Telefone.ToString();
+        email = ViewBag.Registro.Email.ToString();
+        cep = ViewBag.Registro.Cep.ToString();
+        logradouro = ViewBag.Registro.Logradouro.ToString();
+        numero = ViewBag.Registro.Numero.ToString();
+        bairro = ViewBag.Registro.Bairro.ToString();
+        cidade = ViewBag.Registro.Cidade.ToString();
+        uf = ViewBag.Registro.UF.ToString();
+        complemento = ViewBag.Registro.Complemento.ToString();
+    }
+    catch
+    {
+
+
+    }
+}
+
+<form asp-controller="Home" asp-action="Registrar">
+    <input asp-for="Id" class="form-control" value="@id" type="hidden" />
+    <div class="row">
+        <div class="col-lg-3">
+            <label>Nome</label>
+            <input asp-for="Nome" class="form-control" value="@nome" />
+        </div>
+
+        <div class="col-lg-3">
+            <label>Data Cadastro</label>
+            <input asp-for="Data_Cadastro" class="form-control" value="@data_cadastro" />
+        </div>
+
+        <div class="col-lg-3">
+            <label>CPF ou CNPJ</label>
+            <input asp-for="Cpf_Cnpj" class="form-control" value="@cpf_cnpj"/>
+        </div>
+
+        <div class="col-lg-3">
+            <label>Data Nascimento</label>
+            <input asp-for="Data_Nascimento" class="form-control" value="@data_nascimento"/>
+        </div>
+
+        <div class="col-lg-3">
+            <label>Tipo</label>
+            <input asp-for="Tipo" class="form-control" value="@tipo"/>
+        </div>
+
+        <div class="col-lg-3">
+            <label>Telefone</label>
+            <input asp-for="Telefone" class="form-control" value="@telefone"/>
+        </div>
+
+        <div class="col-lg-3">
+            <label>E-mail</label>
+            <input asp-for="Email" class="form-control" value="@email"/>
+        </div>
+
+        <div class="col-lg-3">
+            <label>CEP</label>
+            <input asp-for="Cep" class="form-control" value="@cep"/>
+        </div>
+
+        <div class="col-lg-3">
+            <label>Logradouro</label>
+            <input asp-for="Logradouro" class="form-control" value="@logradouro"/>
+        </div>
+
+        <div class="col-lg-3">
+            <label>Numero</label>
+            <input asp-for="Numero" class="form-control" value="@numero"/>
+        </div>
+
+        <div class="col-lg-3">
+            <label>Bairro</label>
+            <input asp-for="Bairro" class="form-control" value="@bairro"/>
+        </div>
+
+        <div class="col-lg-3">
+            <label>Complemento</label>
+            <input asp-for="Complemento" class="form-control" value="@complemento"/>
+        </div>
+
+        <div class="col-lg-3">
+            <label>Cidade</label>
+            <input asp-for="Cidade" class="form-control" value="@cidade" />
+        </div>
+
+        <div class="col-lg-3">
+            <label>UF</label>
+            <input asp-for="UF" class="form-control" value="@uf"/>
+        </div>
+                        
+    </div>
+    <br /><br />
+    <button type="submit" class="btn btn-block btn-success" onclick="registrar()">Registrar Cliente</button>
+</form>

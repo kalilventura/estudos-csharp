@@ -1,0 +1,13 @@
+Porque não deixar a regra no banco: Qualquer linguagem de programação é mais rica em detalhes que o Transact SQL, pois não conseguimos testar os dados, podemos utilizar Stored Procedures, porém não deixar com tomadas de decisão
+
+Linguagem Obiqua: Falar a mesma linguagem do cliente.
+
+Dominio Rico: Testavel
+
+Dominio Anemico:nao e possivel fazer testes
+
+Sub-dominios: segmentacao de um dominio em menores
+
+Separação em contextos delimitados: Pequenos pedaços do sistema criado
+
+Design By Contracts: fornecem uma maneira de especificar pré-condições, pós-condições e invariáveis de objeto no código. As pré-condições são requisitos que devem ser atendidos ao inserir um método ou uma propriedade. As pós-condições descrevem as expectativas no momento em que o código do método ou da propriedade é fechado. As invariáveis de objeto descrevem o estado esperado de uma classe que está em um bom estado.

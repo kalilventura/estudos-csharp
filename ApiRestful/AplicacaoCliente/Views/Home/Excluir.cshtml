@@ -1,0 +1,19 @@
+﻿<h2>Excluir Cliente</h2>
+
+<h3>Deseja realmente excluir o cliente selecionado?</h3>
+
+<button class="btn btn-danger" onclick="Excluir(1);">Sim</button>
+<button class="btn btn-primary" onclick="Excluir(0);">Não</button>
+
+<script>
+    function Excluir(id)
+    {
+        if (id == 0)
+        {
+            window.location.href = window.location.origin + "/Home/Index";
+        }
+        else {
+            window.location.href = window.location.origin + "/Home/ExcluirCliente/" + '@ViewData["ClienteID"]';
+        }
+    }
+</script>
