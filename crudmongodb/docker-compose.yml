@@ -1,0 +1,24 @@
+version: '3'
+
+services: 
+  crudmongodb:
+    image: crudmongodb
+    build: 
+      context: .
+    ports: 
+      - "20000:80"
+    networks: 
+      - aspnetmongo-network
+    depends_on: 
+      - "mongodb"
+  
+  mongodb:
+    image: mongo
+    ports: 
+      - "27017:27017"
+    networks: 
+      - aspnetmongo-network
+
+networks: 
+  aspnetmongo-network:
+    driver: bridge
