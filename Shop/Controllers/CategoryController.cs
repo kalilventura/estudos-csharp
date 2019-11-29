@@ -15,18 +15,32 @@ namespace Shop.Controllers
     {
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromServices] DataContext context)
         {
-            return Ok();
+            try
+            {
+                return Ok(await context.Categories.AsNoTracking().ToListAsync());
+            }
+            catch (System.Exception err)
+            {
+                return BadRequest(err);
+            }
         }
 
         [HttpGet]
         // Permite somente id do tipo int
         // O parametro vem via URL
         [Route("{id:int}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get(int id, [FromServices] DataContext context)
         {
-            return Ok();
+            try
+            {
+                return Ok(await context.Categories.AsNoTracking().FirstOrDefaultAsync(x => x.Id.Equals(id)));
+            }
+            catch (System.Exception err)
+            {
+                return BadRequest(err);
+            }
         }
 
         [HttpPost]
