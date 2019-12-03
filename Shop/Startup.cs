@@ -21,7 +21,7 @@ namespace Shop
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<DataContext>(opt => opt.UseInMemoryDatabase("Database"));
+            services.AddDbContext<DataContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
             
             // A abertura e fechamento da conexão do banco de dados ficam pelo escopo
             services.AddScoped<DataContext, DataContext>();
