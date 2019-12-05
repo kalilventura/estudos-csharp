@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shop.Data;
@@ -14,60 +15,66 @@ namespace Shop.Controllers
     public class ProductController : ControllerBase
     {
         [HttpGet]
-        public async Task<IActionResult> Get([FromServices] DataContext context)
+        [Route("")]
+        [AllowAnonymous]
+        public async Task<ActionResult<List<Product>>> Get([FromServices] DataContext context)
         {
-            try
-            {
-                var products = await context
-                                        .Products
-                                        .Include(x => x.Category) // Com a referencia no modelo conseguimos buscar as categorias
-                                        .AsNoTracking()
-                                        .ToListAsync();
-                return Ok(products);
-            }
-            catch (System.Exception err)
-            {
-                return BadRequest(err);
-            }
+            var products = await context
+                                    .Products
+                                    .Include(x => x.Category)
+                                    .AsNoTracking()
+                                    .ToListAsync();
+            return products;
         }
 
         [HttpGet]
-        [Route("{id: int}")]
-        public async Task<IActionResult> Get(int id, [FromServices] DataContext context)
+        [Route("{id:int}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<Product>> GetById([FromServices] DataContext context, int id)
         {
-            try
-            {
-                var products = await context
-                                        .Products
-                                        .Include(x => x.Category) // Com a referencia no modelo conseguimos buscar as categorias
-                                        .AsNoTracking()
-                                        .FirstOrDefaultAsync(x => x.Id == id);
-                return Ok(products);
-            }
-            catch (System.Exception err)
-            {
-                return BadRequest(err);
-            }
+            var product = await context
+                                    .Products
+                                    .Include(x => x.Category)
+                                    .AsNoTracking()
+                                    .FirstOrDefaultAsync(x => x.Id == id);
+            return product;
         }
 
-        //products/categories/1
         [HttpGet]
-        [Route("categories/{id: int}")]
-        public async Task<IActionResult> GetByCategory(int id, [FromServices] DataContext context)
+        [Route("categories/{id:int}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<List<Product>>> GetByCategory([FromServices] DataContext context, int id)
         {
-            try
+            var products = await context
+                                    .Products
+                                    .Include(x => x.Category)
+                                    .AsNoTracking()
+                                    .Where(x => x.CategoryId == id)
+                                    .ToListAsync();
+            return products;
+        }
+
+        [HttpPost]
+        [Route("")]
+        [Authorize(Roles = "employee")]
+        public async Task<ActionResult<Product>> Post(
+            [FromServices] DataContext context,
+            [FromBody]Product model)
+        {
+            if (ModelState.IsValid)
             {
-                var products = await context
-                                        .Products
-                                        .Include(x => x.Category) // Com a referencia no modelo conseguimos buscar as categorias
-                                        .AsNoTracking()
-                                        .Where(x => x.CategoryId == id)
-                                        .ToListAsync();
-                return Ok(products);
+                context
+                    .Products
+                    .Add(model);
+
+                await context
+                        .SaveChangesAsync();
+                
+                return model;
             }
-            catch (System.Exception err)
+            else
             {
-                return BadRequest(err);
+                return BadRequest(ModelState);
             }
         }
 

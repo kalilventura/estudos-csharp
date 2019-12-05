@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shop.Data;
@@ -9,12 +10,16 @@ using Shop.Models;
 namespace Shop.Controllers
 {
     //Endpoint = Url
-    //http://localhost:5000/Categories/[]
-    [Route("Categories")]
+    //http://localhost:5000/v1/categories/[]
+    [Route("v1/categories")]
     public class CategoryController : ControllerBase
     {
 
         [HttpGet]
+        [AllowAnonymous]
+        [ResponseCache(VaryByHeader = "User-Agent", Location = ResponseCacheLocation.Any, Duration = 30)]
+        // Caso quiser bloquear o cache para esse método
+        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> Get([FromServices] DataContext context)
         {
             try
@@ -31,6 +36,7 @@ namespace Shop.Controllers
         // Permite somente id do tipo int
         // O parametro vem via URL
         [Route("{id:int}")]
+        [AllowAnonymous]
         public async Task<IActionResult> Get(int id, [FromServices] DataContext context)
         {
             try
@@ -44,6 +50,7 @@ namespace Shop.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "employee")]
         public async Task<IActionResult> Post([FromBody]Category category, [FromServices] DataContext context)
         {
             if (!ModelState.IsValid)
@@ -64,6 +71,7 @@ namespace Shop.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
+        [Authorize(Roles = "employee")]
         public async Task<IActionResult> Put(int id, [FromBody]Category category, [FromServices] DataContext context)
         {
             if (!ModelState.IsValid)
@@ -88,6 +96,7 @@ namespace Shop.Controllers
 
         [HttpDelete]
         [Route("{id:int}")]
+        [Authorize(Roles = "employee")]
         public async Task<IActionResult> Delete(int id, [FromServices] DataContext context)
         {
             try
