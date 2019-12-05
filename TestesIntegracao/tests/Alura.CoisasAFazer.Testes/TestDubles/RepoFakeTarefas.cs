@@ -32,7 +32,7 @@ namespace Alura.CoisasAFazer.Testes.TestDubles
 
         public IEnumerable<Tarefa> ObtemTarefas(Func<Tarefa, bool> filtro)
         {
-            return lista;
+            return lista.Where(filtro);
         }
     }
 }

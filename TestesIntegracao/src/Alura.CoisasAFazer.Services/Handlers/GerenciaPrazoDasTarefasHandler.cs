@@ -10,9 +10,9 @@ namespace Alura.CoisasAFazer.Services.Handlers
     {
         IRepositorioTarefas _repo;
 
-        public GerenciaPrazoDasTarefasHandler()
+        public GerenciaPrazoDasTarefasHandler(IRepositorioTarefas _repo)
         {
-            _repo = new RepositorioTarefa();
+            this._repo = _repo;
         }
 
         public void Execute(GerenciaPrazoDasTarefas comando)
