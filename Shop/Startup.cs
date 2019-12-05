@@ -64,7 +64,8 @@ namespace Shop
             services.AddDbContext<DataContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
 
             // A abertura e fechamento da conexão do banco de dados ficam pelo escopo
-            services.AddScoped<DataContext, DataContext>();
+            // A linha abaixo não é mais necessária na versão do .net core 3
+            //services.AddScoped<DataContext, DataContext>();
 
             services.AddSwaggerGen(c =>
             {
