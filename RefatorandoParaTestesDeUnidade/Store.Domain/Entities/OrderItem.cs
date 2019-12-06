@@ -4,6 +4,10 @@ namespace Store.Domain.Entities
     {
         public OrderItem(Product product, int quantity)
         {
+            AddNotifications(new Contact()
+                                .Requires()
+                                .IsNotNull(product, "Product", "Produto Inválido")
+                                .IsGreaterThen(quantity, 0, "A quantidade deve ser maior que zero") );
             Product = product;
             Price = Product != null ? product.Price : 0;
             Quantity = quantity;
