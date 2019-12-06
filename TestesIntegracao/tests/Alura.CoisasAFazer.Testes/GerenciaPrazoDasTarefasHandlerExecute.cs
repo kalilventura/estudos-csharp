@@ -17,7 +17,7 @@ namespace Alura.CoisasAFazer.Testes
         public void QuandoTarefasEstiveremAtrasadasDeveMudarSeuStatus()
         {
             //Arrange
-
+            // Fake Object
             var categoriaCompras = new Categoria(1, "Compras");
             var categoriaCasa = new Categoria(2, "Casa");
             var categoriaTrabalho = new Categoria(3, "Trabalho");
