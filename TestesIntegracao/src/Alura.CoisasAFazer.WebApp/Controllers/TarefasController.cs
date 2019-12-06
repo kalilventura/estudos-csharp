@@ -10,25 +10,21 @@ namespace Alura.CoisasAFazer.WebApp.Controllers
     [ApiController]
     public class TarefasController : ControllerBase
     {
-        private readonly IRepositorioTarefas repositorio;
-
-        public TarefasController(IRepositorioTarefas repositorio)
-        {
-            this.repositorio = repositorio;
-        }
+        private readonly DbTarefasContext _context;
+        private readonly IRepositorioTarefas _repositorioTarefas;
 
         [HttpPost]
         public IActionResult EndpointCadastraTarefa(CadastraTarefaVM model)
         {
             var cmdObtemCateg = new ObtemCategoriaPorId(model.IdCategoria);
-            var categoria = new ObtemCategoriaPorIdHandler(repositorio).Execute(cmdObtemCateg);
+            var categoria = new ObtemCategoriaPorIdHandler(_context).Execute(cmdObtemCateg);
             if (categoria == null)
             {
                 return NotFound("Categoria não encontrada");
             }
 
             var comando = new CadastraTarefa(model.Titulo, categoria, model.Prazo);
-            var handler = new CadastraTarefaHandler(repositorio);
+            var handler = new CadastraTarefaHandler(_repositorioTarefas);
             handler.Execute(comando);
             return Ok();
         }

@@ -15,10 +15,11 @@ namespace Alura.CoisasAFazer.Infrastructure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if(optionsBuilder.IsConfigured) 
+            if (optionsBuilder.IsConfigured)
                 return;
             
-            optionsBuilder.UseSqlServer("");
+            optionsBuilder
+                .UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=DbTarefas;Trusted_Connection=true");
         }
 
         public DbSet<Tarefa> Tarefas { get; set; }
