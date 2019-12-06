@@ -86,8 +86,60 @@ namespace Alura.CoisasAFazer.Testes
             handler.Execute(comando);
 
             //Then
-            moqLogger.Verify(x => x.Log(LogLevel.Error,It.IsAny<EventId>(), excecaoEsperada, mensagemErro), Times.Once());
+            moqLogger.Verify(x => x.Log(
+                        It.IsAny<LogLevel>(),
+                        It.IsAny<EventId>(),
+                        It.IsAny<object>(),
+                        It.IsAny<Exception>(),
+                        It.IsAny<Func<object, Exception, string>>()
+                        ), Times.Once());
 
+        }
+
+        delegate void CapturaMensagemLog(LogLevel level,
+                                            EventId eventId,
+                                            object state,
+                                            Exception exception,
+                                            Func<object, Exception, string> function);
+
+        [Fact]
+        public void DadaTarefaValidaDeveLogar()
+        {
+            //Given
+            string tituloTarefaEsperado = "Estudar Xunit";
+            var comando = new CadastraTarefa(tituloTarefaEsperado, new Categoria("Estudo"), new DateTime(2019, 12, 31));
+
+            //Criando um moq do repositorio
+            var moq = new Mock<IRepositorioTarefas>();
+            var moqLogger = new Mock<ILogger<CadastraTarefaHandler>>();
+
+            LogLevel levelCapturado = LogLevel.None;
+            string mensagemCapturada = string.Empty;
+
+            CapturaMensagemLog capturaMensagemLog = (level, eventId, state, exception, func) =>
+            {   
+                levelCapturado = level;
+                mensagemCapturada = func(state, exception);
+            };
+
+            moqLogger.Setup(x =>
+                    x.Log(
+                            It.IsAny<LogLevel>(),
+                            It.IsAny<EventId>(),
+                            It.IsAny<object>(),
+                            It.IsAny<Exception>(),
+                            It.IsAny<Func<object, Exception, string>>()
+                        ))
+                .Callback(capturaMensagemLog);
+
+            var handler = new CadastraTarefaHandler(moq.Object, moqLogger.Object);
+
+            //When
+            CommandResult success = handler.Execute(comando);
+
+            //Then
+            Assert.Equal(LogLevel.Information, levelCapturado);
+            Assert.Contains(tituloTarefaEsperado, mensagemCapturada);
         }
     }
 }
