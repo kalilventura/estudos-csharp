@@ -17,7 +17,7 @@ namespace Alura.CoisasAFazer.WebApp.Controllers
         public IActionResult EndpointCadastraTarefa(CadastraTarefaVM model)
         {
             var cmdObtemCateg = new ObtemCategoriaPorId(model.IdCategoria);
-            var categoria = new ObtemCategoriaPorIdHandler(_context).Execute(cmdObtemCateg);
+            var categoria = new ObtemCategoriaPorIdHandler(_repositorioTarefas).Execute(cmdObtemCateg);
             if (categoria == null)
             {
                 return NotFound("Categoria não encontrada");

@@ -10,7 +10,7 @@ namespace Alura.CoisasAFazer.Services.Handlers
     {
         IRepositorioTarefas _repo;
 
-        public GerenciaPrazoDasTarefasHandler(RepositorioTarefa repository)
+        public GerenciaPrazoDasTarefasHandler(IRepositorioTarefas repository)
         {
             _repo = repository;
         }
