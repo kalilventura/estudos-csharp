@@ -10,7 +10,7 @@ namespace Store.Domain.Entities
         public Order(Customer customer, decimal deliveryFee, Discount discount)
         {
 
-            AddNotifications(new Contact()
+            AddNotifications(new Contract()
                                 .Requires()
                                 .IsNotNull(customer, "Customer", "Cliente Inválido") );
 
