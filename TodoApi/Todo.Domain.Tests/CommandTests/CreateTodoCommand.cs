@@ -8,7 +8,7 @@ namespace Todo.Domain.Tests.CommandTests
         [TestMethod]
         public void Dado_um_comando_invalido()
         {
-            Assert.Fail();
+            var command = new CreateTodoCommand();
         }
 
         [TestMethod]
