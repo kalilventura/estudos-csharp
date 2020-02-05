@@ -24,7 +24,7 @@ namespace Todo.Domain.Commands
             AddNotifications(
                 new Contract()
                     .Requires()
-                    .HasMaxLen(Title, 3, "Title", "Por favor, descreva melhor essa tarefa")
+                    .HasMinLen(Title, 3, "Title", "Por favor, descreva melhor essa tarefa")
                     .HasMinLen(User, 6, "User", "Usuário Inválido")
             );
         }
