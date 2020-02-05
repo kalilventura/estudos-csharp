@@ -1,7 +1,10 @@
+using Todo.Domain.Entities;
+
 namespace Todo.Domain.Repositories
 {
-    public class ITodoRepository
+    public interface ITodoRepository
     {
-        
+        void Create(TodoItem item);
+        void Update(TodoItem item);
     }
 }
