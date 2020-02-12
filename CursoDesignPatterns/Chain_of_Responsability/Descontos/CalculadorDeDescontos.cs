@@ -8,10 +8,12 @@ namespace Chain_of_Responsability.Descontos
         {
             var desconto5itens = new DescontoPorCincoItens();
             var desconto500reais = new DescontoPorMaisQuinhentosReais();
+            var descontoVendaCasada = new DescontoVendaCasada();
             var semDesconto = new SemDesconto();
 
             desconto5itens.Proximo = desconto500reais;
-            desconto500reais.Proximo = semDesconto;
+            desconto500reais.Proximo = descontoVendaCasada;
+            descontoVendaCasada.Proximo = semDesconto;
 
             return desconto5itens.Desconto(orcamento);
         }
