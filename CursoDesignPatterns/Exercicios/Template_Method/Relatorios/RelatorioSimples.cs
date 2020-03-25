@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace Template_Method.Relatorios
 {
     public class RelatorioSimples : TemplateRelatorios
